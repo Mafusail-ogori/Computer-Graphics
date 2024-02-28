@@ -3,8 +3,10 @@
 :root {
   --accent-color: #1976d2;
   --background-color: #ffffff;
-  --h1-size: 30px;
+  --h1-size: 50px;
   --h1-weight: 600;
+  --h2-size: 30px;
+  --h2-weight: 500;
   --outer-border-radius: 15px;
 }
 

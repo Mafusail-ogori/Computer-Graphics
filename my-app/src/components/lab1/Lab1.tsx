@@ -64,49 +64,52 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
       variant={UiVariant.Contained}
       className={classes["general-container"]}
     >
-      <ContentCard className={classes["input-menu-container"]}>
-        <h1 className={styles["h1-text"]}>2D TRANSLATOR</h1>
-        <div className={classes["buttons-container"]}>
-          {tasks.map((task: Task, index: number) => (
-            <Button
-              key={index}
-              onClick={() => taskButtonClickHandler(task)}
-              variant={UiVariant.Contained}
-            >
-              {task.taskName}
-            </Button>
-          ))}
-        </div>
-        {activeTask ? (
-          <div className={classes["input-container"]}>
-            <TextField
-              variant={UiVariant.Outlined}
-              onChange={coordinatesChangeHandler}
-              value={coordinates}
-              placeholder={placeholders[0]}
-              label={"Coordinates"}
-            />
-            <TextField
-              variant={UiVariant.Outlined}
-              onChange={metamorphicMatrixChangeHandler}
-              value={metamorphicMatrix}
-              placeholder={placeholders[1]}
-              label={"Matrix"}
-            />
+      <h1 className={styles["h1-text"]}>2D PLOT</h1>
+      <div className={classes["model-container"]}>
+        <ContentCard className={classes["input-menu-container"]}>
+          <h2 className={styles["h2-text"]}>PARAMETERS</h2>
+          <div className={classes["buttons-container"]}>
+            {tasks.map((task: Task, index: number) => (
+              <Button
+                key={index}
+                onClick={() => taskButtonClickHandler(task)}
+                variant={UiVariant.Contained}
+              >
+                {task.taskName}
+              </Button>
+            ))}
           </div>
-        ) : null}
-        <Button
-          variant={UiVariant.Contained}
-          onClick={calculateButtonClickHandler}
-        >
-          Calculate
-        </Button>
-      </ContentCard>
-      <ContentCard className={classes["plot-container"]} id="plot-container">
-        <h1 className={styles["h1-text"]}>CALCULATED PLOT</h1>
-        <p>{activeTask.inputOption}</p>
-        {points.length > 0 ? dotPlot("#plot-container", points) : null}
-      </ContentCard>
+          {activeTask ? (
+            <div className={classes["input-container"]}>
+              <TextField
+                variant={UiVariant.Outlined}
+                onChange={coordinatesChangeHandler}
+                value={coordinates}
+                placeholder={placeholders[0]}
+                label={"Coordinates"}
+              />
+              <TextField
+                variant={UiVariant.Outlined}
+                onChange={metamorphicMatrixChangeHandler}
+                value={metamorphicMatrix}
+                placeholder={placeholders[1]}
+                label={"Matrix"}
+              />
+            </div>
+          ) : null}
+          <Button
+            variant={UiVariant.Contained}
+            onClick={calculateButtonClickHandler}
+          >
+            Calculate
+          </Button>
+        </ContentCard>
+        <ContentCard className={classes["plot-container"]} id="plot-container">
+          <h2 className={styles["h2-text"]}>CALCULATED PLOT</h2>
+          <p>{activeTask.inputOption}</p>
+          {points.length > 0 ? dotPlot("#plot-container", points) : null}
+        </ContentCard>
+      </div>
     </ContentCard>
   );
 };

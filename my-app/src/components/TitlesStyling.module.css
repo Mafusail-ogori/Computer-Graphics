@@ -1,7 +1,17 @@
-.h1-text {
-  font-size: var(--h1-size);
-  font-weight: var(--h1-weight);
-  color: var(--accent-color);
+.h1-text,
+.h2-text {
   margin: 0;
   padding: 0;
+}
+
+.h1-text {
+  color: var(--background-color);
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+}
+
+.h2-text {
+  color: var(--accent-color);
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
 }
