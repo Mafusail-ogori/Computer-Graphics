@@ -1,6 +1,6 @@
 import { InputOption } from "./InputOption";
 
-export type Task = {
+export interface Task {
   taskName: string;
   inputOption: InputOption;
-};
+}

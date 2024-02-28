@@ -1,0 +1,7 @@
+.h1-text {
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  color: var(--accent-color);
+  margin: 0;
+  padding: 0;
+}

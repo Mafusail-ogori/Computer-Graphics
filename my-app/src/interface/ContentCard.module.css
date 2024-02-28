@@ -1,8 +1,16 @@
-.card-container {
+.contained-card-container,
+.outlined-card-container {
   display: flex;
   flex-direction: row;
   padding: 40px 60px;
-  border: 1px solid var(--accent-color);
+  border-radius: var(--outer-border-radius);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 20px;
+}
+
+.outlined-card-container {
   background-color: var(--background-color);
-  border-radius: 15px;
+}
+
+.contained-card-container {
+  background-color: var(--accent-color);
 }

@@ -1,0 +1,31 @@
+.general-container {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+.input-menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plot-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
