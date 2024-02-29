@@ -5,13 +5,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { UiVariant } from "../../models/UiVariant";
 import classes from "./Lab1.module.css";
 import styles from "../TitlesStyling.module.css";
-import { dotPlot } from "../../utils/plots";
 import {
   calculateUpdatedDotCoordinates,
   placeholderUtil,
   pointUtil,
 } from "../../utils/point";
 import { Point, PointScenario } from "../../models/Point";
+import { Lab1Plot } from "./Lab1Plot";
+import { InputOption } from "../../models/InputOption";
 
 export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const [activeTask, setActiveTask] = useState<Task>(tasks[0]);
@@ -19,6 +20,7 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const [metamorphicMatrix, setMetamorphicMatrix] = useState<string>("");
   const [placeholders, setPlaceholders] = useState<string[]>([]);
   const [points, setPoints] = useState<Point[]>([]);
+  const [updatedPoints, setUpdatePoints] = useState<Point[]>([]);
 
   const taskButtonClickHandler = (task: Task) => {
     setActiveTask(task);
@@ -37,23 +39,33 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   };
 
   const calculateButtonClickHandler = () => {
-    const point: number[] = pointUtil(coordinates, PointScenario.Point);
-    const matrix: number[][] = metamorphicMatrix.split(";").map((chunk) => {
+    const matrix: Point[] = metamorphicMatrix.split(";").map((chunk) => {
       return pointUtil(chunk, PointScenario.Matrix);
     });
-    const updatedPoint: number[] = calculateUpdatedDotCoordinates(
-      { xCoordinate: point[0], yCoordinate: point[1] },
-      [
-        { xCoordinate: matrix[0][0], yCoordinate: matrix[0][1] },
-        { xCoordinate: matrix[1][0], yCoordinate: matrix[1][1] },
-      ]
-    );
-    setPoints([
-      { xCoordinate: point[0], yCoordinate: point[1] },
-      { xCoordinate: updatedPoint[0], yCoordinate: updatedPoint[1] },
-    ]);
+    switch (activeTask.inputOption) {
+      case InputOption.Dot: {
+        const point: Point = pointUtil(coordinates, PointScenario.Point);
+        const updatedPoint: Point = calculateUpdatedDotCoordinates(
+          point,
+          matrix
+        );
+        setPoints([point]);
+        setUpdatePoints([updatedPoint]);
+        break;
+      }
+      case InputOption.Line: {
+        const points: Point[] = coordinates.split(";").map((chunk) => {
+          return pointUtil(chunk, PointScenario.Point);
+        });
+        const updatedPoints: Point[] = points.map((point) => {
+          return calculateUpdatedDotCoordinates(point, matrix);
+        });
+        setPoints(points);
+        setUpdatePoints(updatedPoints);
+        break;
+      }
+    }
   };
-  console.log(points);
 
   useEffect(() => {
     setPlaceholders(placeholderUtil(activeTask.inputOption));
@@ -104,11 +116,12 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
             Calculate
           </Button>
         </ContentCard>
-        <ContentCard className={classes["plot-container"]} id="plot-container">
-          <h2 className={styles["h2-text"]}>CALCULATED PLOT</h2>
-          <p>{activeTask.inputOption}</p>
-          {points.length > 0 ? dotPlot("#plot-container", points) : null}
-        </ContentCard>
+        <Lab1Plot
+          className={classes["plot-container"]}
+          points={points}
+          updatedPoints={updatedPoints}
+          activeTask={activeTask}
+        />
       </div>
     </ContentCard>
   );

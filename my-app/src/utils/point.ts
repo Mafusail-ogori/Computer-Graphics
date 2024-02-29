@@ -23,24 +23,35 @@ export const placeholderUtil = (inputOption: InputOption) => {
     }
   }
 };
-
 export const pointUtil = (coordinates: string, variant: PointScenario) => {
-  const pointRegex = /\((\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\)/;
-  const matrixRegex = /\[(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\]/;
+  const pointRegex = /\((-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\)/;
+  const matrixRegex = /\[(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\]/;
   switch (variant) {
     case PointScenario.Point: {
       const match = coordinates.match(pointRegex);
       if (match) {
-        return [parseFloat(match[1]), parseFloat(match[2])];
+        return {
+          xCoordinate: parseFloat(match[1]),
+          yCoordinate: parseFloat(match[2]),
+        };
       }
-      return [];
+      return {
+        xCoordinate: 0,
+        yCoordinate: 0,
+      };
     }
     case PointScenario.Matrix: {
       const match = coordinates.match(matrixRegex);
       if (match) {
-        return [parseFloat(match[1]), parseFloat(match[2])];
+        return {
+          xCoordinate: parseFloat(match[1]),
+          yCoordinate: parseFloat(match[2]),
+        };
       }
-      return [];
+      return {
+        xCoordinate: 0,
+        yCoordinate: 0,
+      };
     }
   }
 };
@@ -55,5 +66,5 @@ export const calculateUpdatedDotCoordinates = (
   const updatedY =
     point.yCoordinate * matrix[0].yCoordinate +
     point.yCoordinate * matrix[1].yCoordinate;
-  return [updatedX, updatedY];
+  return { xCoordinate: updatedX, yCoordinate: updatedY };
 };

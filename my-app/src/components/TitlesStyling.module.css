@@ -1,5 +1,6 @@
 .h1-text,
-.h2-text {
+.h2-text,
+.h3-text {
   margin: 0;
   padding: 0;
 }
@@ -10,8 +11,17 @@
   font-weight: var(--h1-weight);
 }
 
-.h2-text {
+.h2-text,
+.h3-text {
   color: var(--accent-color);
+}
+
+.h2-text {
   font-size: var(--h2-size);
   font-weight: var(--h2-weight);
+}
+
+.h3-text {
+  font-size: var(--h3-size);
+  font-weight: var(--h3-weight);
 }

@@ -1,21 +1,25 @@
 import functionPlot from "function-plot";
 import { Point } from "../models/Point";
 
-export const dotPlot = (targetContainer: string, point: Point[]) => {
+export const dotPlot = (
+  targetContainer: string,
+  point: Point[],
+  updatePoint: Point[]
+) => {
   functionPlot({
     width: 500,
     height: 500,
     target: targetContainer,
     yAxis: {
       domain: [
-        (point[1].yCoordinate + point[0].yCoordinate) / 2 - 100,
-        (point[1].yCoordinate + point[0].yCoordinate) / 2 + 100,
+        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 - 100,
+        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 + 100,
       ],
     },
     xAxis: {
       domain: [
-        (point[1].xCoordinate + point[0].xCoordinate) / 2 - 100,
-        (point[1].xCoordinate + point[0].xCoordinate) / 2 + 100,
+        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 - 100,
+        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 + 100,
       ],
     },
     grid: true,
@@ -25,17 +29,46 @@ export const dotPlot = (targetContainer: string, point: Point[]) => {
         fnType: "implicit",
       },
       {
-        fn: `(x - ${point[1].xCoordinate})^2 + (y - ${point[1].yCoordinate})^2 - 0.2`,
+        fn: `(x - ${updatePoint[0].xCoordinate})^2 + (y - ${updatePoint[0].yCoordinate})^2 - 0.2`,
         fnType: "implicit",
       },
     ],
   });
 };
 
-export const linePLot = (targetContainer: string, points: Point[]) => {
+export const linePLot = (
+  targetContainer: string,
+  points: Point[],
+  updatedPoints: Point[]
+) => {
   functionPlot({
     width: 500,
     height: 500,
     target: targetContainer,
+    grid: true,
+    yAxis: {
+      domain: [-100, 100],
+    },
+    xAxis: {
+      domain: [-100, 100],
+    },
+    data: [
+      {
+        points: [
+          [points[0].xCoordinate, points[0].yCoordinate],
+          [points[1].xCoordinate, points[1].yCoordinate],
+        ],
+        fnType: "points",
+        graphType: "polyline",
+      },
+      {
+        points: [
+          [updatedPoints[0].xCoordinate, updatedPoints[0].yCoordinate],
+          [updatedPoints[1].xCoordinate, updatedPoints[1].yCoordinate],
+        ],
+        fnType: "points",
+        graphType: "polyline",
+      },
+    ],
   });
 };
