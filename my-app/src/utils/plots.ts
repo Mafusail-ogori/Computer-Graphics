@@ -12,24 +12,24 @@ export const dotPlot = (
     target: targetContainer,
     yAxis: {
       domain: [
-        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 - 100,
-        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 + 100,
+        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 - 10,
+        (updatePoint[0].yCoordinate + point[0].yCoordinate) / 2 + 10,
       ],
     },
     xAxis: {
       domain: [
-        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 - 100,
-        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 + 100,
+        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 - 10,
+        (updatePoint[0].xCoordinate + point[0].xCoordinate) / 2 + 10,
       ],
     },
     grid: true,
     data: [
       {
-        fn: `(x - ${point[0].xCoordinate})^2 + (y - ${point[0].yCoordinate})^2 - 0.2`,
+        fn: `(x - ${point[0].xCoordinate})^2 + (y - ${point[0].yCoordinate})^2 - 0.01`,
         fnType: "implicit",
       },
       {
-        fn: `(x - ${updatePoint[0].xCoordinate})^2 + (y - ${updatePoint[0].yCoordinate})^2 - 0.2`,
+        fn: `(x - ${updatePoint[0].xCoordinate})^2 + (y - ${updatePoint[0].yCoordinate})^2 - 0.01`,
         fnType: "implicit",
       },
     ],
