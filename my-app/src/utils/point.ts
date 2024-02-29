@@ -1,5 +1,6 @@
 import { InputOption } from "../models/InputOption";
 import { Point, PointScenario } from "../models/Point";
+import { Task } from "../models/Task";
 
 export const placeholderUtil = (inputOption: InputOption) => {
   switch (inputOption) {
@@ -67,4 +68,37 @@ export const calculateUpdatedDotCoordinates = (
     point.yCoordinate * matrix[0].yCoordinate +
     point.yCoordinate * matrix[1].yCoordinate;
   return { xCoordinate: updatedX, yCoordinate: updatedY };
+};
+
+export const calculateVisualizationParameters = (
+  metamorphicMatrix: string,
+  coordinates: string,
+  activeTask: Task
+) => {
+  const matrix: Point[] = metamorphicMatrix.split(";").map((chunk: string) => {
+    return pointUtil(chunk, PointScenario.Matrix);
+  });
+  switch (activeTask.inputOption) {
+    case InputOption.Dot: {
+      const point: Point = pointUtil(coordinates, PointScenario.Point);
+      const updatedPoint: Point = calculateUpdatedDotCoordinates(point, matrix);
+      return {
+        points: [point],
+        updatedPoints: [updatedPoint],
+      };
+    }
+    case InputOption.Line:
+    case InputOption.Triangle: {
+      const points: Point[] = coordinates.split(";").map((chunk: string) => {
+        return pointUtil(chunk, PointScenario.Point);
+      });
+      const updatedPoints: Point[] = points.map((point: Point) => {
+        return calculateUpdatedDotCoordinates(point, matrix);
+      });
+      return {
+        points: points,
+        updatedPoints: updatedPoints,
+      };
+    }
+  }
 };

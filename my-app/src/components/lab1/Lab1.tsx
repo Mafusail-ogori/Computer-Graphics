@@ -3,16 +3,14 @@ import { ContentCard } from "../../ui/ContentCard";
 import { Task } from "../../models/Task";
 import { ChangeEvent, useEffect, useState } from "react";
 import { UiVariant } from "../../models/UiVariant";
+import {
+  calculateVisualizationParameters,
+  placeholderUtil,
+} from "../../utils/point";
+import { Point } from "../../models/Point";
+import { Lab1Plot } from "./Lab1Plot";
 import classes from "./Lab1.module.css";
 import styles from "../TitlesStyling.module.css";
-import {
-  calculateUpdatedDotCoordinates,
-  placeholderUtil,
-  pointUtil,
-} from "../../utils/point";
-import { Point, PointScenario } from "../../models/Point";
-import { Lab1Plot } from "./Lab1Plot";
-import { InputOption } from "../../models/InputOption";
 
 export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const [activeTask, setActiveTask] = useState<Task>(tasks[0]);
@@ -39,43 +37,13 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   };
 
   const calculateButtonClickHandler = () => {
-    const matrix: Point[] = metamorphicMatrix.split(";").map((chunk) => {
-      return pointUtil(chunk, PointScenario.Matrix);
-    });
-    switch (activeTask.inputOption) {
-      case InputOption.Dot: {
-        const point: Point = pointUtil(coordinates, PointScenario.Point);
-        const updatedPoint: Point = calculateUpdatedDotCoordinates(
-          point,
-          matrix
-        );
-        setPoints([point]);
-        setUpdatePoints([updatedPoint]);
-        break;
-      }
-      case InputOption.Line: {
-        const points: Point[] = coordinates.split(";").map((chunk) => {
-          return pointUtil(chunk, PointScenario.Point);
-        });
-        const updatedPoints: Point[] = points.map((point: Point) => {
-          return calculateUpdatedDotCoordinates(point, matrix);
-        });
-        setPoints(points);
-        setUpdatePoints(updatedPoints);
-        break;
-      }
-      case InputOption.Triangle: {
-        const points: Point[] = coordinates.split(";").map((chunk) => {
-          return pointUtil(chunk, PointScenario.Point);
-        });
-        const updatedPoints: Point[] = points.map((point: Point) => {
-          return calculateUpdatedDotCoordinates(point, matrix);
-        });
-        setPoints(points);
-        setUpdatePoints(updatedPoints);
-        break;
-      }
-    }
+    const results = calculateVisualizationParameters(
+      metamorphicMatrix,
+      coordinates,
+      activeTask
+    );
+    setPoints(results.points);
+    setUpdatePoints(results.updatedPoints);
   };
 
   useEffect(() => {
