@@ -72,3 +72,44 @@ export const linePLot = (
     ],
   });
 };
+
+export const trianglePlot = (
+  targetContainer: string,
+  points: Point[],
+  updatedPoints: Point[]
+) => {
+  functionPlot({
+    width: 500,
+    height: 500,
+    target: targetContainer,
+    grid: true,
+    yAxis: {
+      domain: [-10, 10],
+    },
+    xAxis: {
+      domain: [-10, 10],
+    },
+    data: [
+      {
+        points: [
+          [points[0].xCoordinate, points[0].yCoordinate],
+          [points[1].xCoordinate, points[1].yCoordinate],
+          [points[2].xCoordinate, points[2].yCoordinate],
+          [points[0].xCoordinate, points[2].yCoordinate],
+        ],
+        fnType: "points",
+        graphType: "polyline",
+      },
+      {
+        points: [
+          [updatedPoints[0].xCoordinate, updatedPoints[0].yCoordinate],
+          [updatedPoints[1].xCoordinate, updatedPoints[1].yCoordinate],
+          [updatedPoints[2].xCoordinate, updatedPoints[2].yCoordinate],
+          [updatedPoints[0].xCoordinate, updatedPoints[2].yCoordinate],
+        ],
+        fnType: "points",
+        graphType: "polyline",
+      },
+    ],
+  });
+};

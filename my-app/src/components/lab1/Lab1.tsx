@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import { ContentCard } from "../../interface/ContentCard";
+import { ContentCard } from "../../ui/ContentCard";
 import { Task } from "../../models/Task";
 import { ChangeEvent, useEffect, useState } from "react";
 import { UiVariant } from "../../models/UiVariant";
@@ -57,7 +57,18 @@ export const Lab1: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
         const points: Point[] = coordinates.split(";").map((chunk) => {
           return pointUtil(chunk, PointScenario.Point);
         });
-        const updatedPoints: Point[] = points.map((point) => {
+        const updatedPoints: Point[] = points.map((point: Point) => {
+          return calculateUpdatedDotCoordinates(point, matrix);
+        });
+        setPoints(points);
+        setUpdatePoints(updatedPoints);
+        break;
+      }
+      case InputOption.Triangle: {
+        const points: Point[] = coordinates.split(";").map((chunk) => {
+          return pointUtil(chunk, PointScenario.Point);
+        });
+        const updatedPoints: Point[] = points.map((point: Point) => {
           return calculateUpdatedDotCoordinates(point, matrix);
         });
         setPoints(points);
