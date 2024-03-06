@@ -32,6 +32,7 @@ const Cube: React.FC<CubeProps> = ({
 );
 
 export const Lab2Plot: React.FC<{ pointer: Pointer }> = ({ pointer }) => {
+  console.log(pointer.xRotation, pointer.yRotation, pointer.zRotation);
   return (
     <ContentCard variant={UiVariant.Outlined}>
       <Canvas camera={{ position: [0, 2, 10] }}>
@@ -40,13 +41,12 @@ export const Lab2Plot: React.FC<{ pointer: Pointer }> = ({ pointer }) => {
           <directionalLight intensity={1} position={[6, 2, 1]} />
           <ambientLight intensity={1} />
           <Grid size={10} />
-
           <Cube
             handleClick={() => console.log("clicked on the cube")}
             rotation={[
-              pointer.xRotation * Math.PI,
-              pointer.yRotation * Math.PI,
-              pointer.zRotation * Math.PI,
+              (pointer.xRotation * Math.PI) / 100,
+              (pointer.yRotation * Math.PI) / 100,
+              (pointer.zRotation * Math.PI) / 100,
             ]}
             position={[pointer.xPosition, pointer.yPosition, pointer.zPosition]}
             scale={[pointer.xScale, pointer.yScale, pointer.zScale]}
