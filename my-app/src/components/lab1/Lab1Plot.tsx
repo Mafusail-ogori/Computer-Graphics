@@ -2,7 +2,7 @@ import { Point } from "../../models/Point";
 import { ContentCard } from "../../ui/ContentCard";
 import { Task } from "../../models/Task";
 import { InputOption } from "../../models/InputOption";
-import { dotPlot, linePLot, trianglePlot } from "../../utils/plots";
+import { dotPlot, linePLot, trianglePlot } from "../../utils/lab1/plots";
 import styles from "../TitlesStyling.module.css";
 import classes from "./Lab1Plot.module.css";
 

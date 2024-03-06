@@ -6,7 +6,7 @@ import { UiVariant } from "../../models/UiVariant";
 import {
   calculateVisualizationParameters,
   placeholderUtil,
-} from "../../utils/point";
+} from "../../utils/lab1/point";
 import { Point } from "../../models/Point";
 import { Lab1Plot } from "./Lab1Plot";
 import classes from "./Lab1.module.css";

@@ -1,6 +1,6 @@
-import { InputOption } from "../models/InputOption";
-import { Point, PointScenario } from "../models/Point";
-import { Task } from "../models/Task";
+import { InputOption } from "../../models/InputOption";
+import { Point, PointScenario } from "../../models/Point";
+import { Task } from "../../models/Task";
 
 export const placeholderUtil = (inputOption: InputOption) => {
   switch (inputOption) {

@@ -1,5 +1,5 @@
 import functionPlot from "function-plot";
-import { Point } from "../models/Point";
+import { Point } from "../../models/Point";
 
 export const dotPlot = (
   targetContainer: string,

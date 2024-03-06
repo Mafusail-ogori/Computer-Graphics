@@ -5,6 +5,7 @@
   padding: 40px 60px;
   border-radius: var(--outer-border-radius);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 20px;
+  overflow: hidden;
 }
 
 .outlined-card-container {
