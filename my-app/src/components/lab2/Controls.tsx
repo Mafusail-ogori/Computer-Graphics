@@ -56,55 +56,46 @@ export const Controls: React.FC<ControlsProps> = ({ controls }) => {
       className={classes["controls-container"]}
     >
       <h2 className={styles["h2-text"]}>ENTER CUBE SETTINGS</h2>
-
       <TextField
         value={xPosition}
         onChange={(e) => setXPosition(+e.target.value)}
         label="X Position"
       />
-
       <TextField
         value={yPosition}
         onChange={(e) => setYPosition(+e.target.value)}
         label="Y Position"
       />
-
       <TextField
         value={zPosition}
         onChange={(e) => setZPosition(+e.target.value)}
         label="Z Position"
       />
-
       <TextField
         value={xRotation}
         onChange={(e) => setXRotation(+e.target.value)}
         label="X Rotation"
       />
-
       <TextField
         value={yRotation}
         onChange={(e) => setYRotation(+e.target.value)}
         label="Y Rotation"
       />
-
       <TextField
         value={zRotation}
         onChange={(e) => setZRotation(+e.target.value)}
         label="Z Rotation"
       />
-
       <TextField
         value={xScale}
         onChange={(e) => setXScale(+e.target.value)}
         label="X Scale"
       />
-
       <TextField
         value={yScale}
         onChange={(e) => setYScale(+e.target.value)}
         label="Y Scale"
       />
-
       <TextField
         value={zScale}
         onChange={(e) => setZScale(+e.target.value)}

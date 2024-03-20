@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Box } from "@react-three/drei";
 import { Text } from "@react-three/drei";
-import { Grid } from "./Grid";
+import { Grid } from "../scene/Grid";
 import { ContentCard } from "../../ui/ContentCard";
 import { UiVariant } from "../../models/UiVariant";
 import { Pointer } from "../../models/Pointer";
