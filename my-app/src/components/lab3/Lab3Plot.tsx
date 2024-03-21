@@ -42,21 +42,40 @@ export const Lab3Plot: React.FC<{
           rotationAngle ? (
             <>
               <Dot coordinates={updatedCoordinates} color={"#3471eb"} />
-              <Plane
-                args={[5, 5, 5, 5]}
-                rotation={[0, Math.PI / 2, 0]}
-                position={[
-                  updatedCoordinates.xCoordinate,
-                  updatedCoordinates.yCoordinate,
-                  updatedCoordinates.zCoordinate,
-                ]}
-              >
-                <meshStandardMaterial
-                  attach="material"
-                  color={0xf5c842}
-                  wireframe
-                />
-              </Plane>
+              {scenario === Lab3Scenario.Parallel ? (
+                <Plane
+                  args={[10, 10, 10, 10]}
+                  rotation={[0, Math.PI / 2, 0]}
+                  position={[
+                    updatedCoordinates.xCoordinate,
+                    updatedCoordinates.yCoordinate,
+                    updatedCoordinates.zCoordinate,
+                  ]}
+                >
+                  <meshStandardMaterial
+                    attach="material"
+                    color={0xf5c842}
+                    wireframe
+                  />
+                </Plane>
+              ) : null}
+              {scenario === Lab3Scenario.Oblique ? (
+                <Plane
+                  args={[10, 10, 10, 10]}
+                  rotation={[0, (rotationAngle[1] * Math.PI) / 180, 0]}
+                  position={[
+                    updatedCoordinates.xCoordinate,
+                    updatedCoordinates.yCoordinate,
+                    updatedCoordinates.zCoordinate,
+                  ]}
+                >
+                  <meshStandardMaterial
+                    attach="material"
+                    color={0xf5c842}
+                    wireframe
+                  />
+                </Plane>
+              ) : null}
             </>
           ) : null}
         </Suspense>
