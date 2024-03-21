@@ -1,5 +1,5 @@
 import { InputOption } from "../../models/InputOption";
-import { Point, PointScenario } from "../../models/Point";
+import { Point, Point3d, PointScenario } from "../../models/Point";
 import { Task } from "../../models/Task";
 
 export const placeholderUtil = (inputOption: InputOption) => {
@@ -101,4 +101,41 @@ export const calculateVisualizationParameters = (
       };
     }
   }
+};
+
+export const calculateUpdatedPointParallel = (
+  point: Point3d,
+  distance: number
+) => {
+  const updatedXCoordinate: number =
+    point.xCoordinate / (point.zCoordinate / distance);
+  const updatedYCoordinate: number =
+    point.yCoordinate / (point.zCoordinate / distance);
+
+  return {
+    xCoordinate: updatedXCoordinate,
+    yCoordinate: updatedYCoordinate,
+    zCoordinate: point.zCoordinate,
+  };
+};
+
+export const calculateUpdatedPointOblique = (
+  point: Point3d,
+  distance: number,
+  angles: number[]
+) => {
+  const updatedXCoordinate: number =
+    point.xCoordinate +
+    (distance / Math.tan((angles[1] * Math.PI) / 180)) *
+      Math.cos((angles[0] * Math.PI) / 180);
+  const updatedYCoordinate: number =
+    point.yCoordinate +
+    (distance / Math.tan((angles[1] * Math.PI) / 180)) *
+      Math.sin((angles[0] * Math.PI) / 180);
+
+  return {
+    xCoordinate: updatedXCoordinate,
+    yCoordinate: updatedYCoordinate,
+    zCoordinate: point.zCoordinate,
+  };
 };

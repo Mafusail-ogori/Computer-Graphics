@@ -12,5 +12,4 @@ export interface Point3d {
   xCoordinate: number;
   yCoordinate: number;
   zCoordinate: number;
-  dCoordinate: number;
 }

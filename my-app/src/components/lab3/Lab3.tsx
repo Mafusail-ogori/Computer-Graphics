@@ -6,15 +6,37 @@ import { ChangeEvent, useState } from "react";
 import styles from "../TitlesStyling.module.css";
 import classes from "./Lab3.module.css";
 import { Point3d } from "../../models/Point";
+import { Lab3Scenario } from "../../models/InputOption";
+import {
+  calculateUpdatedPointOblique,
+  calculateUpdatedPointParallel,
+} from "../../utils/lab1/point";
 
-export const Lab3 = () => {
+export const Lab3: React.FC<{ scenarios: Lab3Scenario[] }> = ({
+  scenarios,
+}) => {
   const [coordinates, setCoordinates] = useState<Point3d>({
     xCoordinate: 0,
     yCoordinate: 0,
     zCoordinate: 0,
-    dCoordinate: 0,
   });
+
+  const [updatedCoordinates, setUpdatedCoordinates] = useState<Point3d>({
+    xCoordinate: 0,
+    yCoordinate: 0,
+    zCoordinate: 0,
+  });
+
   const [angles, setAngles] = useState<number[]>([0, 0]);
+  const [distance, setDistance] = useState<number>(0);
+
+  const [activeScenario, setActiveScenario] = useState<Lab3Scenario>(
+    Lab3Scenario.Parallel
+  );
+
+  const scenarioClickHandler = (activeScenario: Lab3Scenario) => {
+    setActiveScenario(activeScenario);
+  };
 
   const coordinatesInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const updatedCoordinates: number[] = event.target.value
@@ -24,12 +46,32 @@ export const Lab3 = () => {
       xCoordinate: updatedCoordinates[0],
       yCoordinate: updatedCoordinates[1],
       zCoordinate: updatedCoordinates[2],
-      dCoordinate: updatedCoordinates[3],
     });
+  };
+
+  const distanceInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setDistance(+event.target.value);
   };
 
   const anglesInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setAngles(event.target.value.split(",").map((chunk) => +chunk));
+  };
+
+  const calculateUpdatedPointClickHandler = () => {
+    switch (activeScenario) {
+      case Lab3Scenario.Parallel: {
+        setUpdatedCoordinates(
+          calculateUpdatedPointParallel(coordinates, distance)
+        );
+        break;
+      }
+      case Lab3Scenario.Oblique: {
+        setUpdatedCoordinates(
+          calculateUpdatedPointOblique(coordinates, distance, angles)
+        );
+        break;
+      }
+    }
   };
 
   return (
@@ -44,26 +86,49 @@ export const Lab3 = () => {
           className={classes["controls-container"]}
         >
           <div className={classes["button-menu-container"]}>
-            <Button variant={UiVariant.Contained}>Parallel Projection</Button>
-            <Button variant={UiVariant.Contained}>Oblique Projection</Button>
+            {scenarios.map((scenario: Lab3Scenario) => (
+              <Button
+                variant={UiVariant.Contained}
+                onClick={() => scenarioClickHandler(scenario)}
+              >
+                {scenario}
+              </Button>
+            ))}
           </div>
           <TextField
             variant={UiVariant.Outlined}
-            label={"Dots Coordinates"}
-            placeholder={"9, 2, 4, 5"}
+            label={"Dot Initial Coordinates"}
+            placeholder={"3, 2, 4"}
             onChange={coordinatesInputHandler}
           />
           <TextField
             variant={UiVariant.Outlined}
-            label={"Angles (Ox / projection)"}
-            placeholder={"12, 30"}
-            onChange={anglesInputHandler}
+            label={"Distance"}
+            placeholder={"9"}
+            onChange={distanceInputHandler}
           />
-          <Button variant={UiVariant.Contained}>Calculate</Button>
+          {activeScenario === Lab3Scenario.Oblique ? (
+            <TextField
+              variant={UiVariant.Outlined}
+              label={"Angles (Ox / projection)"}
+              placeholder={"12, 30"}
+              onChange={anglesInputHandler}
+            />
+          ) : null}
+          <Button
+            variant={UiVariant.Contained}
+            onClick={calculateUpdatedPointClickHandler}
+          >
+            Calculate
+          </Button>
         </ContentCard>
       </div>
-
-      <Lab3Plot updatedPoint={coordinates} rotationAngle={angles} />
+      <Lab3Plot
+        scenario={activeScenario}
+        coordinates={coordinates}
+        rotationAngle={angles}
+        updatedCoordinates={updatedCoordinates}
+      />
     </ContentCard>
   );
 };
